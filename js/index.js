@@ -1,4 +1,4 @@
-const API_KEY = "AIzaSyB5SbpL1HHNsdd1rWAVv-2v6wrvpk9foMk";
+const API_KEY = "AIzaSyCvEuSxtJdU5cO-e0mrxEtFrHxccehpSLM";
 const VIDEOS_URL = "https://www.googleapis.com/youtube/v3/videos";
 const SEARCH_URL = "https://www.googleapis.com/youtube/v3/search";
 const router = new Navigo("/", { hash: true });
@@ -6,8 +6,6 @@ const router = new Navigo("/", { hash: true });
 const main = document.querySelector("main");
 
 const favoriteIds = JSON.parse(localStorage.getItem("favorirteYT") || "[]");
-
-const videoListItems = document.querySelector(".video-list__items");
 
 const preload = {
   elem: document.createElement("div"),
@@ -231,20 +229,23 @@ const createListVideo = (videos, titleText, pagination) => {
   if (pagination) {
     const paginationElem = document.createElement("div");
     paginationElem.classList.add("pagination");
-    if (pagination.next) {
-      const arrowNext = document.createElement("a");
-      arrowNext.append(title, videoListItems);
-      arrowNext.textContent = "Наступна сторінка";
-      arrowNext.href = `#/search?q={pagination.searchQuery}&page=${pagination.next}`;
-      paginationElem.append(arrowNext);
-    }
 
     if (pagination.prev) {
       const arrowPrev = document.createElement("a");
+      arrowPrev.classList.add("pagination__arrow");
       arrowPrev.append(title, videoListItems);
       arrowPrev.textContent = "Попередня сторінка";
-      arrowPrev.href = `#/search?q={pagination.searchQuery}&page=${pagination.prev}`;
+      arrowPrev.href = `#/search?q=${pagination.searchQuery}&page=${pagination.prev}`;
       paginationElem.append(arrowPrev);
+    }
+
+    if (pagination.next) {
+      const arrowNext = document.createElement("a");
+      arrowNext.classList.add("pagination__arrow");
+      arrowNext.append(title, videoListItems);
+      arrowNext.textContent = "Наступна сторінка";
+      arrowNext.href = `#/search?q=${pagination.searchQuery}&page=${pagination.next}`;
+      paginationElem.append(arrowNext);
     }
 
     videoListSection.append(paginationElem);
